@@ -9,3 +9,14 @@
 ```
 
 Command and Control centre
+
+Usage
+=====
+
+List all zerglings
+
+    ./overmind.rb zerglings
+
+Hatch zerglings
+
+    ./overmind.rb hatch 100
