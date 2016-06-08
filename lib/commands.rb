@@ -20,7 +20,7 @@ class HatchCommand < Command
     ip_address = host.networks.v4[0].ip_address
     puts ip_address
 
-    keys = ['/home/kevin/.ssh/id_rsa_coreos']
+    keys = [ENV['DIGITAL_OCEAN_KEY_FILE']]
     Net::SSH.start(ip_address, 'core', :keys => keys) do |ssh|
       puts ssh.exec! "docker run -e COUCH=#{ENV['COUCH']} kevinjqiu/viper"
     end
