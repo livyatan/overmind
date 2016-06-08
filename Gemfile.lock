@@ -12,6 +12,7 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    byebug (9.0.5)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     commander (4.4.0)
@@ -51,6 +52,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
+    retriable (2.1.0)
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
@@ -67,9 +69,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  byebug
   commander
   couchrest
   droplet_kit
+  retriable
 
 BUNDLED WITH
    1.12.5
