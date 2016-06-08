@@ -45,6 +45,7 @@ GEM
     minitest (5.9.0)
     multi_json (1.12.1)
     multipart-post (2.0.0)
+    net-ssh (3.1.1)
     netrc (0.11.0)
     resource_kit (0.1.5)
       addressable (~> 2.3.6)
@@ -73,6 +74,7 @@ DEPENDENCIES
   commander
   couchrest
   droplet_kit
+  net-ssh
   retriable
 
 BUNDLED WITH

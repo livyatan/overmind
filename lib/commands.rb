@@ -1,4 +1,5 @@
 require 'byebug'
+require 'net/ssh'
 require_relative 'nests'
 
 class Command
@@ -18,6 +19,11 @@ class HatchCommand < Command
     host = @nest.get_or_create_host
     ip_address = host.networks.v4[0].ip_address
     puts ip_address
+
+    keys = ['/home/kevin/.ssh/id_rsa_coreos']
+    Net::SSH.start(ip_address, 'core', :keys => keys) do |ssh|
+      puts ssh.exec! "docker run -e COUCH=#{ENV['COUCH']} kevinjqiu/viper"
+    end
   end
 end
 
