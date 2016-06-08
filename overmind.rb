@@ -22,8 +22,10 @@ class Overmind
 
     command :hatch do |c|
       c.syntax = 'overmind hatch'
+      c.option '-n INTEGER', Integer, 'Number of zerglings to hatch'
       c.action do |args, options|
-        HatchCommand.new(@logger).run()
+        n = options.n || 1
+        HatchCommand.new(@logger, n).run()
       end
     end
 

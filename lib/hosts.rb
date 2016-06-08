@@ -1,7 +1,15 @@
 require 'net/ssh'
 
 class Host
-  def run(image)
+  def id
+    raise NotImplementedError
+  end
+
+  def ip_address
+    raise NotImplementedError
+  end
+
+  def run_image(image, params=[])
     raise NotImplementedError
   end
 end
@@ -14,6 +22,10 @@ class DigitalOceanHost < Host
 
   def ip_address
     @droplet.networks.v4[0].ip_address
+  end
+
+  def id
+    @droplet.id
   end
 
   def run_image(image_name, params=[])
