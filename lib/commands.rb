@@ -17,13 +17,9 @@ class HatchCommand < Command
   def run
     @logger.info 'Start nesting'
     host = @nest.get_or_create_host
-    ip_address = host.networks.v4[0].ip_address
-    puts ip_address
+    puts "Viper host ip address: #{host.ip_address}"
 
-    keys = [ENV['DIGITAL_OCEAN_KEY_FILE']]
-    Net::SSH.start(ip_address, 'core', :keys => keys) do |ssh|
-      puts ssh.exec! "docker run -e COUCH=#{ENV['COUCH']} kevinjqiu/viper"
-    end
+    host.run_image('kevinjqiu/viper', ["-e COUCH=#{ENV['COUCH']}"])
   end
 end
 
