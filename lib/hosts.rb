@@ -21,7 +21,7 @@ class DigitalOceanHost < Host
     puts "About to run command: #{command} on host: #{ip_address}"
     Net::SSH.start(ip_address, 'core', :keys => @keys) do |ssh|
       output = ssh.exec! command
-      lines = output.split.collect { |line| line.start_with? "****" }
+      lines = output.lines.map(&:chomp).select { |line| line.start_with? "****" }
       puts lines
       if lines.include? "****ZERGLING HATCHED****"
         true
