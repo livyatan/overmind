@@ -32,6 +32,8 @@ class DigitalOceanHost < Host
     command = "docker pull #{image_name} && docker run #{params.join(' ')} #{image_name}"
     puts "About to run command: #{command} on host: #{ip_address}"
     Net::SSH.start(ip_address, 'core', :keys => @keys) do |ssh|
+      puts ssh.exec! 'docker restart tor'
+      puts ssh.exec! 'sudo /home/core/up.sh'
       output = ssh.exec! command
       lines = output.lines.map(&:chomp).select { |line| line.start_with? "****" }
       puts lines
