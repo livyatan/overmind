@@ -2,7 +2,6 @@ require 'rubygems'
 require 'commander'
 require 'couchrest'
 require 'logger'
-require 'byebug'
 require 'retriable'
 require_relative 'lib/commands'
 

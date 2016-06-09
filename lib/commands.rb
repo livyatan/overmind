@@ -1,4 +1,3 @@
-require 'byebug'
 require 'net/ssh'
 require_relative 'nests'
 
@@ -18,27 +17,29 @@ class HatchCommand < Command
   def run
     @logger.info 'Start nesting'
 
+    time_delay = 10
+
     i = 0
     while i < @total_zerglings do
       host = @nest.get_or_create_host
       puts "Viper host ip address: #{host.ip_address}"
 
+      puts "Current time delay: #{time_delay} secs"
       begin
         host.run_image('kevinjqiu/viper', ["-e COUCH=#{ENV['COUCH']}"])
         i += 1
         @logger.info "Hatched #{i}/#{@total_zerglings}"
+        time_delay = [time_delay / 2, 10].max
       rescue
         @logger.warn "Runtime error encountered. Time to relocate to another host"
-        @nest.destroy_host host
+        time_delay *= 2
       ensure
         if i < @total_zerglings
-          sec = 30
-          @logger.info "Cooling down for #{sec} seconds"
-          sleep sec
+          @logger.info "Cooling down for #{time_delay} seconds"
+          sleep time_delay
         end
       end
     end
-
   end
 end
 
