@@ -5,7 +5,7 @@ class Nest
 end
 
 class DigitalOceanNest < Nest
-  SNAPSHOT_ID = '17777208'
+  SNAPSHOT_ID = '17811821'
   def initialize
     @client = DropletKit::Client.new(access_token: ENV['DIGITAL_OCEAN_ACCESS_TOKEN'])
 
