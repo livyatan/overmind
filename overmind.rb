@@ -35,6 +35,22 @@ class Overmind
       end
     end
 
+    command :vote do |c|
+      c.syntax = 'overmind vote'
+      c.option '--up', 'Upvote'
+      c.option '--down', 'Downvote'
+      c.option '--thing STRING', String, 'Thing to up/down vote'
+      c.action do |args, options|
+        permalink = options.thing
+        action = if options.up
+                   :up
+                 else
+                   :down
+                 end
+        VoteCommand.new(@logger, @db, action, permalink).run()
+      end
+    end
+
     run!
   end
 end

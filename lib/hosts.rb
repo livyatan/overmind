@@ -28,20 +28,25 @@ class DigitalOceanHost < Host
     @droplet.id
   end
 
-  def run_image(image_name, params=[])
-    command = "docker pull #{image_name} && docker run #{params.join(' ')} #{image_name}"
+  def run_image(image_name, params=[], cmd='')
+    command = "docker pull #{image_name} && docker run #{params.join(' ')} #{image_name} #{cmd}"
     puts "About to run command: #{command} on host: #{ip_address}"
     Net::SSH.start(ip_address, 'core', :keys => @keys) do |ssh|
-      puts ssh.exec! 'docker restart tor'
-      puts ssh.exec! 'sudo /home/core/up.sh'
+      switch_ip ssh
       output = ssh.exec! command
-      lines = output.lines.map(&:chomp).select { |line| line.start_with? "****" }
-      puts lines
-      if lines.include? "****ZERGLING HATCHED****"
-        true
-      else
-        raise RuntimeError.new(lines)
-      end
+      puts output
+      #lines = output.lines.map(&:chomp).select { |line| line.start_with? "****" }
+      #puts lines
+      #if lines.include? "****ZERGLING HATCHED****"
+      #  true
+      #else
+      #  raise RuntimeError.new(lines)
+      #end
     end
+  end
+
+  private def switch_ip(ssh)
+    puts ssh.exec! 'docker restart tor'
+    puts ssh.exec! 'sudo /home/core/up.sh'
   end
 end
